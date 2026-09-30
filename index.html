@@ -52,12 +52,25 @@
         "save_image": false,
         "calendar": false,
         "hide_volume": true,
-        "compareSymbols": [
-          { "symbol": "NASDAQ:QQQ", "position": "SameScale" }
-        ],
         "studies": [
-          "STD;EMA"
+          {
+            "id": "MASimple@tv-basicstudies",
+            "inputs": { "length": 50 }
+          },
+          {
+            "id": "MASimple@tv-basicstudies",
+            "inputs": { "length": 200 }
+          },
+          {
+            "id": "PivotPointsStandard@tv-basicstudies"
+          }
         ],
+        "studies_overrides": {
+          "moving average.ma.color": "#FFD700",
+          "moving average.ma.linewidth": 2,
+          "moving average_1.ma.color": "#1E90FF",
+          "moving average_1.ma.linewidth": 2
+        },
         "support_host": "https://www.tradingview.com"
       }
       </script>
