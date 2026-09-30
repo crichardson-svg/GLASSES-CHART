@@ -39,12 +39,14 @@
       width: 100% !important; height: 100% !important; background: #000 !important;
     }
     .tradingview-widget-copyright { display: none !important; }
-    .tfs { height: 64px; background: #000; display: flex; gap: 6px; padding: 8px; }
+    .tfs { height: 76px; background: #000; display: flex; gap: 8px; padding: 8px; }
     .tfs button {
-      flex: 1; height: 48px; border: 2px solid #444; background: #111; color: #fff;
-      font-size: 18px; font-weight: 800; border-radius: 10px; touch-action: manipulation;
+      flex: 1; height: 60px; border: 2px solid #444; background: #111; color: #fff;
+      font-size: 20px; font-weight: 800; border-radius: 12px; touch-action: manipulation;
     }
     .tfs button.active { background: #FFD700; color: #000; border-color: #FFD700; }
+    .tfs button:active { transform: scale(0.94); }
+    .zoom-btns button { touch-action: manipulation; }
   </style>
 </head>
 <body>
@@ -130,9 +132,13 @@
       holder.appendChild(wrap);
     }
     function bind(el, fn) {
-      el.addEventListener("click", fn);
-      el.addEventListener("pointerdown", function (e) { e.preventDefault(); fn(e); });
-      el.addEventListener("touchstart", function (e) { e.preventDefault(); fn(e); }, { passive: false });
+      let lastFire = 0;
+      el.addEventListener("click", function (e) {
+        const now = Date.now();
+        if (now - lastFire < 350) return; // guard against duplicate/ghost events
+        lastFire = now;
+        fn(e);
+      });
     }
     async function loadPdhPdl() {
       const url = "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=10d&includePrePost=false";
